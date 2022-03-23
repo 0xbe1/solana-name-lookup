@@ -29,9 +29,16 @@ export default async function handler(req, res) {
         },
       })
     } else {
+      // It seems this is unlikely to happen
+      // When the name exists, it goes to the error branch
       res.status(200).json({ data: { exist: false, displayname: solName } })
     }
   } catch (error) {
-    res.status(500).json({ error: JSON.stringify(error) })
+    if (error.message === "Invalid name account provided") {
+      res.status(200).json({ data: {exist: false, displayname: solName} })
+    } else {
+      console.log('Error: ', error)
+      res.status(500).json({ error: error.message })
+    }
   }
 }
