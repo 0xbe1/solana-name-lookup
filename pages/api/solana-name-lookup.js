@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const SOL_TLD_AUTHORITY = new PublicKey(
     '58PwtjSDuFHuUkYjH9BYnnQKHfwo9reZhC2zMJv9JPkx'
   )
-  const username = "random"
+  const { username } = req.query 
   const solName = `${username}.sol`
   try {
     const connection = new Connection(clusterApiUrl('mainnet-beta'))
