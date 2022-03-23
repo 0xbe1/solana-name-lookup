@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     )
     const { registry, nftOwner } = await NameRegistryState.retrieve(connection, domainKey)
     if (registry.owner !== null) {
-      console.log({
+      res.status(200).json({
         data: {
           exist: true,
           displayname: solName,
@@ -29,11 +29,9 @@ export default async function handler(req, res) {
         },
       })
     } else {
-      console.log({ data: { exist: false, displayname: solName } })
+      res.status(200).json({ data: { exist: false, displayname: solName } })
     }
-    res.status(200).send("ok!")
   } catch (error) {
-    console.log('Error: ', error)
-    res.status(500).send("not ok!")
+    res.status(500).json({ error: JSON.stringify(error) })
   }
 }
